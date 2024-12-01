@@ -1,4 +1,4 @@
-with open ("1.txt", "r") as myfile:
+with open("1.txt", "r") as myfile:
     data = myfile.readlines()
 
 list_one = []
@@ -11,8 +11,8 @@ list_one = sorted(list_one)
 list_two = sorted(list_two)
 
 tempdist = 0
-for k,m in zip(list_one, list_two):
-    tempdist += abs(int(k)-int(m))
+for k, m in zip(list_one, list_two):
+    tempdist += abs(int(k) - int(m))
 
 print(tempdist)
 
