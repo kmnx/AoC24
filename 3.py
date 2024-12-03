@@ -7,13 +7,13 @@ total = 0
 for line in data:
     res = 0
     muls = line.split("mul(")
-    for item in muls:
-        if item[0].isnumeric():
-            next_split = item.split(")")
-            hopeful = next_split[0].split(",")
-            if len(hopeful) == 2:
-                if hopeful[0].isnumeric() and hopeful[1].isnumeric():
-                    res += int(hopeful[0]) * int(hopeful[1])
+    for candidate in muls:
+        if candidate[0].isnumeric():
+            next_split = candidate.split(")")
+            hopeful_split = next_split[0].split(",")
+            if len(hopeful_split) == 2:
+                if hopeful_split[0].isnumeric() and hopeful_split[1].isnumeric():
+                    res += int(hopeful_split[0]) * int(hopeful_split[1])
     total += res
 
 print(total)
@@ -27,30 +27,30 @@ for line in data:
     longstr += line
 
 # split into blocks that will definitely start with "do()"
-dosplit = longstr.split("do()")
+do_blocks = longstr.split("do()")
 
 # within those blocks, cut off everything after the first "don't()"
-realdos = []
-for block in dosplit:
-    dontsplits = block.split("don't()")
-    realdos.append(dontsplits[0])
+trimmed_do_blocks = []
+for block in do_blocks:
+    split_blocks = block.split("don't()")
+    trimmed_do_blocks.append(split_blocks[0])
 
 # whatever remains has "do()"-status, collect the mul()-candidates
 candidates = []
-for item in realdos:
-    multcand = item.split("mul(")
-    for cand in multcand:
-        candidates.append(cand)
+for candidate in trimmed_do_blocks:
+    mul_candidates = candidate.split("mul(")
+    for candidate in mul_candidates:
+        candidates.append(candidate)
 
 # check if the candidates are valid and calculate the result
-for item in candidates:
-    if item == "":
+for candidate in candidates:
+    if candidate == "":
         continue
-    if item[0].isnumeric():
-        next_split = item.split(")")
-        hopeful = next_split[0].split(",")
-        if len(hopeful) == 2:
-            if hopeful[0].isnumeric() and hopeful[1].isnumeric():
-                res += int(hopeful[0]) * int(hopeful[1])
+    if candidate[0].isnumeric():
+        next_split = candidate.split(")")
+        hopeful_split = next_split[0].split(",")
+        if len(hopeful_split) == 2:
+            if hopeful_split[0].isnumeric() and hopeful_split[1].isnumeric():
+                res += int(hopeful_split[0]) * int(hopeful_split[1])
 
 print(res)
