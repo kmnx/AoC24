@@ -5,6 +5,7 @@ xmas_array = [line for line in data]
 xmas_counter = 0
 directions = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
 
+
 # part 1
 def check_xmas(h, v, dh, dv):
     pattern = "MAS"
@@ -35,12 +36,14 @@ for h, line in enumerate(xmas_array):
                 and (0 < v < len(line) - 1)
                 and not (xmas_array[h + 1][v + 1] == xmas_array[h - 1][v - 1])
             ):
-                charpool = [xmas_array[h + 1][v + 1],
-                            xmas_array[h + 1][v - 1],
-                            xmas_array[h - 1][v + 1],
-                            xmas_array[h - 1][v - 1]]
-                
+                charpool = [
+                    xmas_array[h + 1][v + 1],
+                    xmas_array[h + 1][v - 1],
+                    xmas_array[h - 1][v + 1],
+                    xmas_array[h - 1][v - 1],
+                ]
+
                 if charpool.count("M") == 2 and charpool.count("S") == 2:
-                        xmas_counter += 1
+                    xmas_counter += 1
 
 print("mas-count: ", xmas_counter)
