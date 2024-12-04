@@ -1,92 +1,46 @@
 with open("4.txt", "r") as myfile:
     data = myfile.readlines()
 
-
-xmas_array = []
-for line in data:
-    xmas_array.append(line.strip())
-
+xmas_array = [line for line in data]
 xmas_counter = 0
+directions = [(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1)]
+
+# part 1
+def check_xmas(h, v, dh, dv):
+    pattern = "MAS"
+    return all(
+        0 <= h + (i + 1) * dh < len(xmas_array)
+        and 0 <= v + (i + 1) * dv < len(line)
+        and xmas_array[h + (i + 1) * dh][v + (i + 1) * dv] == pattern[i]
+        for i in range(len(pattern))
+    )
+
+
 for h, line in enumerate(xmas_array):
     for v, char in enumerate(line):
         if char == "X":
-            if h > 2:
-                if (
-                    xmas_array[h - 1][v] == "M"
-                    and xmas_array[h - 2][v] == "A"
-                    and xmas_array[h - 3][v] == "S"
-                ):
-                    xmas_counter += 1
-            if h > 2 and v < len(line) - 3:
-                if (
-                    xmas_array[h - 1][v + 1] == "M"
-                    and xmas_array[h - 2][v + 2] == "A"
-                    and xmas_array[h - 3][v + 3] == "S"
-                ):
-                    xmas_counter += 1
-            if v < len(line) - 3:
-                if (
-                    xmas_array[h][v + 1] == "M"
-                    and xmas_array[h][v + 2] == "A"
-                    and xmas_array[h][v + 3] == "S"
-                ):
-                    xmas_counter += 1
-            if h < len(xmas_array) - 3 and v < len(line) - 3:
-                if (
-                    xmas_array[h + 1][v + 1] == "M"
-                    and xmas_array[h + 2][v + 2] == "A"
-                    and xmas_array[h + 3][v + 3] == "S"
-                ):
-                    xmas_counter += 1
-            if h < len(xmas_array) - 3:
-                if (
-                    xmas_array[h + 1][v] == "M"
-                    and xmas_array[h + 2][v] == "A"
-                    and xmas_array[h + 3][v] == "S"
-                ):
-                    xmas_counter += 1
-            if h < len(xmas_array) - 3 and v > 2:
-                if (
-                    xmas_array[h + 1][v - 1] == "M"
-                    and xmas_array[h + 2][v - 2] == "A"
-                    and xmas_array[h + 3][v - 3] == "S"
-                ):
-                    xmas_counter += 1
-            if v > 2:
-                if (
-                    xmas_array[h][v - 1] == "M"
-                    and xmas_array[h][v - 2] == "A"
-                    and xmas_array[h][v - 3] == "S"
-                ):
-                    xmas_counter += 1
-            if h > 2 and v > 2:
-                if (
-                    xmas_array[h - 1][v - 1] == "M"
-                    and xmas_array[h - 2][v - 2] == "A"
-                    and xmas_array[h - 3][v - 3] == "S"
-                ):
+            for dh, dv in directions:
+                if check_xmas(h, v, dh, dv):
                     xmas_counter += 1
 
+print("xmas-count: ", xmas_counter)
 
-print("xmas-count:", xmas_counter)
-
+# part 2
 xmas_counter = 0
 for h, line in enumerate(xmas_array):
     for v, char in enumerate(line):
         if char == "A":
-            charpool = []
             if (
-                (h > 0)
-                and (h < len(xmas_array) - 1)
-                and (v > 0)
-                and (v < len(line) - 1)
+                (0 < h < len(xmas_array) - 1)
+                and (0 < v < len(line) - 1)
+                and not (xmas_array[h + 1][v + 1] == xmas_array[h - 1][v - 1])
             ):
-                charpool.append(xmas_array[h + 1][v + 1])
-                charpool.append(xmas_array[h + 1][v - 1])
-                charpool.append(xmas_array[h - 1][v + 1])
-                charpool.append(xmas_array[h - 1][v - 1])
+                charpool = [xmas_array[h + 1][v + 1],
+                            xmas_array[h + 1][v - 1],
+                            xmas_array[h - 1][v + 1],
+                            xmas_array[h - 1][v - 1]]
+                
                 if charpool.count("M") == 2 and charpool.count("S") == 2:
-                    if not (xmas_array[h + 1][v + 1] == xmas_array[h - 1][v - 1]):
                         xmas_counter += 1
 
 print("mas-count: ", xmas_counter)
