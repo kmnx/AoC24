@@ -4,7 +4,6 @@ with open("7.txt", "r") as myfile:
     data = myfile.readlines()
 
 def brute(numbers, target, current_result=0, current_index=0, part_two=True):
-    
     # base case, we're at the end of the list
     if current_index == len(numbers):
         return current_result == target
