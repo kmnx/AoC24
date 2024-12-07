@@ -50,27 +50,6 @@ def get_position(room):
 
 
 
-    while True:
-        try:
-            if room[pos[0] + direction[0]][pos[1] + direction[1]] != "#":
-                room[pos[0]][pos[1]] = "X"
-                pos = pos[0] + direction[0],pos[1] + direction[1]
-            else:
-                turns.append(pos)
-                if direction[0] == -1:
-                    direction = (0,1)
-                elif direction[0] == 1:
-                    direction = (0,-1)
-                elif direction[1] == -1:
-                    direction = (-1,0)
-                elif direction[1] == 1:
-                    direction = (1,0)
-            #for line in room:
-            #    print(line)
-            #print(" ")
-        except IndexError:
-            room[pos[0]][pos[1]] = "X"
-            break
 
 
 def main():
